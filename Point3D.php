@@ -16,8 +16,8 @@ class Point3D
     public function flatten($player)
     {
         return [
-            'x' => $player['depth']['x'] * $this->x / $this->y,
-            'y' => $player['depth']['x'] * $this->z / $this->y
+            'x' => $player['depth'] * $this->x / $this->y,
+            'y' => $player['depth'] * $this->z / $this->y
         ];
     }
 }

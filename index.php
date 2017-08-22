@@ -17,15 +17,7 @@
         'bearing'   => 0,
         'elevation' => 0,
         'rotation'  => 0,
-        'window'    => [
-            'x'    => $width,
-            'y'    => $height,
-            'zoom' => $zoom
-        ],
-        'depth'    => [
-            'x' => $width / 2 / tan($zoom),
-            'y' => $height / 2 / tan($zoom)
-        ]
+        'depth'     => $width / 2 / tan($zoom)
     ];
 
     $y = rand(100, 500);
@@ -33,15 +25,13 @@
     $universe = new Universe;
 
     $universe->addTriangle(new Triangle(new Point3D(-100, $y, -100), new Point3D(100, $y, -100), new Point3D(0, $y, 200)));
-    $universe->addTriangle(new Triangle(new Point3D(100, $y, -100), new Point3D(300, $y, -100), new Point3D(200, $y, 200)));
-
+    $universe->addTriangle(new Triangle(new Point3D(400, $y, -100), new Point3D(600, $y, -100), new Point3D(500, $y, 200)));
 ?>
 <html>
     <body>
-        <svg style="border:1px solid black;" width="<?php echo $player['window']['x']; ?>" height="<?php echo $player['window']['y']; ?>">
+        <svg style="border:1px solid black;" width="<?php echo $width; ?>" height="<?php echo $height; ?>">
             <?php
                 foreach ($universe->flatten($player) as $polygon) {
-                    print_r($polygon);
                     foreach ($polygon as &$point) {
                         $point['x'] = $point['x'] + $width / 2;
                         $point['y'] = $height / 2 - $point['y'];
