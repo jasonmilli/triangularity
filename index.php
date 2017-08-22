@@ -43,6 +43,8 @@
                 foreach ($universe->flatten($player) as $polygon) {
                     print_r($polygon);
                     foreach ($polygon as &$point) {
+                        $point['x'] = $point['x'] + $width / 2;
+                        $point['y'] = $height / 2 - $point['y'];
                         $point = implode(',', $point);
                     }
                     ?>
