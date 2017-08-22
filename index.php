@@ -23,12 +23,23 @@
     $triangles = [
         [
             'x1' => -100,
-            'y1' => $y + 100,
+            'y1' => $y,
             'z1' => -100,
             'x2' => 100,
-            'y2' => $y - 100,
+            'y2' => $y,
             'z2' => -100,
             'x3' => 0,
+            'y3' => $y,
+            'z3' => 200
+        ],
+        [
+            'x1' => 100,
+            'y1' => $y,
+            'z1' => -100,
+            'x2' => 300,
+            'y2' => $y,
+            'z2' => -100,
+            'x3' => 200,
             'y3' => $y,
             'z3' => 200
         ]
@@ -62,25 +73,23 @@
             $points[$i] = real($triangle["x{$i}"], $triangle["y{$i}"], $triangle["z{$i}"], $view, $depth, $window);
         }
 
-        $lines = [
-            [
-                'x1' => $points[1]['x'],
-                'y1' => $points[1]['y'],
-                'x2' => $points[2]['x'],
-                'y2' => $points[2]['y']
-            ],
-            [
-                'x1' => $points[2]['x'],
-                'y1' => $points[2]['y'],
-                'x2' => $points[3]['x'],
-                'y2' => $points[3]['y']
-            ],
-            [
-                'x1' => $points[3]['x'],
-                'y1' => $points[3]['y'],
-                'x2' => $points[1]['x'],
-                'y2' => $points[1]['y']
-            ]
+        $lines[] = [
+            'x1' => $points[1]['x'],
+            'y1' => $points[1]['y'],
+            'x2' => $points[2]['x'],
+            'y2' => $points[2]['y']
+        ];
+        $lines[] = [
+            'x1' => $points[2]['x'],
+            'y1' => $points[2]['y'],
+            'x2' => $points[3]['x'],
+            'y2' => $points[3]['y']
+        ];
+        $lines[] = [
+            'x1' => $points[3]['x'],
+            'y1' => $points[3]['y'],
+            'x2' => $points[1]['x'],
+            'y2' => $points[1]['y']
         ];
     }
 
@@ -94,7 +103,9 @@
         $yRatio = $distance / $depth['y'];
 
         $real['x'] = $x / $xRatio + $window['x'] / 2;
-        $real['y'] = $y / $yRatio + $window['y'] / 2;
+        $real['y'] = $window['y'] / 2 - $z / $yRatio;
+
+        //output($real);
 
         return $real;
     }
@@ -111,7 +122,7 @@
 ?>
 <html>
     <body>
-        <svg width="<?php echo $window['x']; ?>" height="<?php echo $window['y']; ?>">
+        <svg style="border:1px solid black;" width="<?php echo $window['x']; ?>" height="<?php echo $window['y']; ?>">
             <?php
                 foreach ($lines as $line) {
                     ?>
