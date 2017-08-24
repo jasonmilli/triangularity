@@ -14,7 +14,9 @@ class Universe
         $return = [];
 
         foreach ($this->triangles as $triangle) {
-            $return[] = $triangle->flatten($player);
+            if ($triangle->visible($player)) {
+                $return[] = $triangle->flatten($player);
+            }
         }
 
         return $return;

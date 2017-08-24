@@ -13,6 +13,17 @@ class Triangle
         $this->point3 = $point3;
     }
 
+    public function visible($player)
+    {
+        foreach ([$this->point1, $this->point2, $this->point3] as $point) {
+            if (!$point->visible($player)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function flatten($player)
     {
         return [

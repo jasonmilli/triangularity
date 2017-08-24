@@ -13,11 +13,22 @@ class Point3D
         $this->z = $z;
     }
 
+    public function visible($player)
+    {
+        if ($player['elevation'] > -pi() / 2 && $player['elevation'] <= pi() / 2) {
+            return abs($player['elevation'] - atan2($this->z, $this->y)) < pi() / 2;
+        }
+        else {
+            return !(abs($player['elevation'] - atan2($this->z, $this->y)) > pi() / 2);
+        }
+    }
+
     public function flatten($player)
     {
         return [
-            'x' => $player['depth'] * $this->x / $this->y,
-            'y' => $player['depth'] * $this->z / $this->y
+            'x' => $player['depth'] * $this->x / $this->z,
+            //'y' => $player['depth'] * $this->y / $this->z
+            'y' => $player['depth'] * tan($player['elevation'] - atan2($this->z, $this->y))
         ];
     }
 }
