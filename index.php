@@ -4,6 +4,8 @@
 
     require('Point3D.php');
     require('Triangle.php');
+    require('Structure.php');
+    require('NavigationStructure.php');
     require('Universe.php');
 
     $width = 500;
@@ -35,23 +37,24 @@
 
     $universe = new Universe;
 
-    $universe->addTriangle(new Triangle(new Point3D(-100, -100, $z), new Point3D(100, -100, $z), new Point3D(0, 200, $z)));
-    $universe->addTriangle(new Triangle(new Point3D(400, -100, $z), new Point3D(600, -100, $z), new Point3D(500, 200, $z)));
+    $universe->addStructure(new NavigationStructure);
 ?>
 <html>
     <body>
         <svg style="border:1px solid black;" width="<?php echo $width; ?>" height="<?php echo $height; ?>">
             <?php
-                foreach ($universe->flatten($player) as $polygon) {
-                    print_r($polygon);
-                    foreach ($polygon as &$point) {
-                        $point['x'] = $point['x'] + $width / 2;
-                        $point['y'] = $height / 2 - $point['y'];
-                        $point = implode(',', $point);
-                    }
+                foreach ($universe->flatten($player) as $structure) {
+                    foreach ($structure as $triangle) {
+                        foreach ($triangle['points'] as &$point) {
+                            $point['x'] = $point['x'] + $width / 2;
+                            $point['y'] = $height / 2 - $point['y'];
+                            $point = implode(',', $point);
+                        }
                     ?>
-                        <polygon points="<?php echo implode(' ', $polygon); ?>" style="fill:white;stroke:red;stroke-width:1" />
+                        <polygon points="<?php echo implode(' ', $triangle['points']); ?>"
+                                 style="fill:white;stroke:<?php echo $triangle['colour']; ?>;stroke-width:1" />
                     <?php
+                    }
                 }
             ?>
         </svg>

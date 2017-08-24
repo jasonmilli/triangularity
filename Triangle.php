@@ -6,11 +6,15 @@ class Triangle
     private $point2;
     private $point3;
 
-    public function __construct(Point3D $point1, Point3D $point2, Point3D $point3)
+    private $colour;
+
+    public function __construct(Point3D $point1, Point3D $point2, Point3D $point3, $colour = 'red')
     {
         $this->point1 = $point1;
         $this->point2 = $point2;
         $this->point3 = $point3;
+
+        $this->colour = $colour;
     }
 
     public function visible($player)
@@ -27,9 +31,12 @@ class Triangle
     public function flatten($player)
     {
         return [
-            $this->point1->flatten($player),
-            $this->point2->flatten($player),
-            $this->point3->flatten($player)
+            'points' => [
+                $this->point1->flatten($player),
+                $this->point2->flatten($player),
+                $this->point3->flatten($player),
+            ],
+            'colour' => $this->colour
         ];
     }
 }

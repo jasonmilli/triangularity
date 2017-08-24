@@ -27,7 +27,6 @@ class Point3D
     {
         return [
             'x' => $player['depth'] * $this->x / $this->z,
-            //'y' => $player['depth'] * $this->y / $this->z
             'y' => $player['depth'] * tan($player['elevation'] - atan2($this->z, $this->y))
         ];
     }

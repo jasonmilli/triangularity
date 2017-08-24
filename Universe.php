@@ -2,21 +2,19 @@
 
 class Universe
 {
-    private $triangles = [];
+    private $structures = [];
 
-    public function addTriangle(Triangle $triangle)
+    public function addStructure(Structure $structure)
     {
-        $this->triangles[] = $triangle;
+        $this->structures[] = $structure;
     }
 
     public function flatten($player)
     {
         $return = [];
 
-        foreach ($this->triangles as $triangle) {
-            if ($triangle->visible($player)) {
-                $return[] = $triangle->flatten($player);
-            }
+        foreach ($this->structures as $structure) {
+            $return[] = $structure->flatten($player);
         }
 
         return $return;
