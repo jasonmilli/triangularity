@@ -1,6 +1,6 @@
 <?php
 
-class Point3D
+class Point
 {
     private $x;
     private $y;
@@ -26,8 +26,8 @@ class Point3D
     public function flatten($player)
     {
         return [
-            'x' => $player['depth'] * $this->x / $this->z,
-            'y' => $player['depth'] * tan($player['elevation'] - atan2($this->z, $this->y))
+            'x' => $player['depth'] * ($this->z ? tan($player['bearing'] - atan2($this->z, $this->x)) : 0),
+            'y' => $player['depth'] * ($this->z ? tan($player['elevation'] - atan2($this->z, $this->y)) : 0)
         ];
     }
 }

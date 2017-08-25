@@ -8,7 +8,7 @@ class Triangle
 
     private $colour;
 
-    public function __construct(Point3D $point1, Point3D $point2, Point3D $point3, $colour = 'red')
+    public function __construct(Point $point1, Point $point2, Point $point3, $colour = 'red')
     {
         $this->point1 = $point1;
         $this->point2 = $point2;

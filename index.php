@@ -2,7 +2,7 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    require('Point3D.php');
+    require('Point.php');
     require('Triangle.php');
     require('Structure.php');
     require('NavigationStructure.php');
@@ -26,7 +26,7 @@
         'x'         => 0,
         'y'         => 0,
         'z'         => 0,
-        'bearing'   => 0,
+        'bearing'   => pi() / 2,
         'elevation' => pi() * $elevation / 180,
         'rotation'  => 0,
         'depth'     => max($width, $height) / 2 / tan($zoom)
@@ -64,5 +64,6 @@
             Elevation: <?php echo $elevation; ?>
             <input type="submit" name="elevate" value="+" />
         </form>
+        <pre><?php print_r($universe->flatten($player)); ?></pre>
     </body>
 </html>
